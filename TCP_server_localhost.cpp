@@ -11,9 +11,9 @@ int main(int argc, char** argv) {
   if (argc != 3) {
     printf("Usage:%s [ip] [port]\n", argv[0]);
     return -1;
-  }
-  char* ip = argv[1];
-  int port = atoi(argv[2]);
+  } 
+    char* ip = argv[1];
+    int port = atoi(argv[2]);
   //创建套接字
   int serv_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
   memset(&serv_addr, 0, sizeof(serv_addr));  //每个字节都用0填充
   serv_addr.sin_family = AF_INET;            //使用IPv4地址
   serv_addr.sin_addr.s_addr = inet_addr(ip);  //具体的IP地址
-  serv_addr.sin_port = htons(port);                       //端口
+  serv_addr.sin_port = htons(port);                    //端口
   bind(serv_sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 #if DEBUG
   unsigned long ip = inet_addr("127.0.0.1");
@@ -42,12 +42,13 @@ int main(int argc, char** argv) {
     char str[] = "HELLOWORLD111";
     write(clnt_sock, str, sizeof(str));
 
-    printf("send: %s\n", str);
+    printf("send: %s\n",str);
     close(clnt_sock);
+
   }
 
   //关闭套接字
-
+  
   close(serv_sock);
 
   return 0;

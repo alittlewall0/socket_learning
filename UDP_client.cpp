@@ -11,9 +11,9 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#define SERVER_PORT 8888
-#define BUFF_LEN 512
-#define SERVER_IP "127.0.0.1"
+#define SERVER_PORT 6699
+#define BUFF_LEN 1024
+#define SERVER_IP "192.168.3.200"
 
 
 void udp_msg_sender(int fd, struct sockaddr* dst)

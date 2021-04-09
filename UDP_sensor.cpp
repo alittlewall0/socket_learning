@@ -6,8 +6,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#define SERVER_PORT 69699
-#define BUFF_LEN 1024
+#define SERVER_PORT 6699
+#define BUFF_LEN 1500
 
 void handle_udp_msg(int fd)
 {
@@ -15,21 +15,24 @@ void handle_udp_msg(int fd)
     socklen_t len;
     int count;
     struct sockaddr_in clent_addr;  //clent_addr用于记录发送方的地址信息
+    len = sizeof(clent_addr);
+    memset(buf, 0, BUFF_LEN);
     while(1)
     {
-        memset(buf, 0, BUFF_LEN);
-        len = sizeof(clent_addr);
+       
         count = recvfrom(fd, buf, BUFF_LEN, 0, (struct sockaddr*)&clent_addr, &len);  //recvfrom是拥塞函数，没有数据就一直拥塞
         if(count == -1)
         {
             printf("recieve data fail!\n");
-            return;
+            continue;
         }
-        printf("client:%s\n",buf);  //打印client发过来的信息
+        printf("size:%d\n",count);  //打印client发过来的信息
+        printf("client:%x\n",buf[3]);  //打印client发过来的信息
+        
         memset(buf, 0, BUFF_LEN);
-        sprintf(buf, "I have recieved %d bytes data!\n", count);  //回复client
-        printf("server:%s\n",buf);  //打印自己发送的信息给
-        sendto(fd, buf, BUFF_LEN, 0, (struct sockaddr*)&clent_addr, len);  //发送信息给client，注意使用了clent_addr结构体指针
+        // sprintf(buf, "I have recieved %d bytes data!\n", count);  //回复client
+        // printf("server:%s\n",buf);  //打印自己发送的信息给
+        // sendto(fd, buf, BUFF_LEN, 0, (struct sockaddr*)&clent_addr, len);  //发送信息给client，注意使用了clent_addr结构体指针
 
     }
 }
